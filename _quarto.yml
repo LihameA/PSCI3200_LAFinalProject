@@ -1,10 +1,10 @@
 project:
   type: website
+  output-dir: docs 
   
 
 website:
   title: "Final Project"
-  output-dir: "_site"
   navbar:
     left:
       - href: index.qmd

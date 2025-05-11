@@ -166,6 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Final Project</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>            COUNTRY Completion Year
@@ -223,8 +224,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <script>
 
-      function styleCell_5dqx9bqdygauwzrrtqvn(i, j, css_id) {
-          var table = document.getElementById("tinytable_5dqx9bqdygauwzrrtqvn");
+      function styleCell_smwnq88vxqkh27s54gn9(i, j, css_id) {
+          var table = document.getElementById("tinytable_smwnq88vxqkh27s54gn9");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -234,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_5dqx9bqdygauwzrrtqvn');
+        var table = document.getElementById('tinytable_smwnq88vxqkh27s54gn9');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -242,8 +243,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_5dqx9bqdygauwzrrtqvn(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_5dqx9bqdygauwzrrtqvn");
+      function spanCell_smwnq88vxqkh27s54gn9(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_smwnq88vxqkh27s54gn9");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -273,20 +274,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_yio73gjnbbalgek8dp3p',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 },  ], css_id: 'tinytable_css_rrxc8ca8n14pqztatcvh',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_fgjt3apro279agn065ug',}, 
-          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_8opli10tjabvwuvekgkz',}, 
-          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_7ocl31zhdjw4b332kg4p',}, 
-          { positions: [ { i: 12, j: 1 }, { i: 12, j: 2 },  ], css_id: 'tinytable_css_5i687l0d384i3lut1typ',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 6, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 3, j: 2 }, { i: 6, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_2ivu3l23k8maw6nycjad',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_0u1t1qmwmjad9zew2qss',}, 
+          { positions: [ { i: 12, j: 1 }, { i: 12, j: 2 },  ], css_id: 'tinytable_css_z197porfdbp2x2q23jwh',}, 
+          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_sotu8u5exwncqfo6wh1i',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_oxnomtfin8wzfjzf8utf',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_nwd0rsy5sr19dq6i9uzf',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 },  ], css_id: 'tinytable_css_mir44ardeg0lkp8xp5l6',}, 
+          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_hzznl4tm4p5neci79r2i',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_huz8rlka6kdpvqbe2ye8',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 6, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 3, j: 2 }, { i: 6, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_egbxgeqguqmpx2wajrwf',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_5dqx9bqdygauwzrrtqvn(cell.i, cell.j, group.css_id);
+                  styleCell_smwnq88vxqkh27s54gn9(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -294,17 +295,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_yio73gjnbbalgek8dp3p, .table th.tinytable_css_yio73gjnbbalgek8dp3p { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_rrxc8ca8n14pqztatcvh, .table th.tinytable_css_rrxc8ca8n14pqztatcvh { text-align: left; }
-      .table td.tinytable_css_fgjt3apro279agn065ug, .table th.tinytable_css_fgjt3apro279agn065ug { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_8opli10tjabvwuvekgkz, .table th.tinytable_css_8opli10tjabvwuvekgkz { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_7ocl31zhdjw4b332kg4p, .table th.tinytable_css_7ocl31zhdjw4b332kg4p { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_5i687l0d384i3lut1typ, .table th.tinytable_css_5i687l0d384i3lut1typ { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_2ivu3l23k8maw6nycjad, .table th.tinytable_css_2ivu3l23k8maw6nycjad { text-align: center; }
-      .table td.tinytable_css_0u1t1qmwmjad9zew2qss, .table th.tinytable_css_0u1t1qmwmjad9zew2qss { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_z197porfdbp2x2q23jwh, .table th.tinytable_css_z197porfdbp2x2q23jwh { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_sotu8u5exwncqfo6wh1i, .table th.tinytable_css_sotu8u5exwncqfo6wh1i { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_oxnomtfin8wzfjzf8utf, .table th.tinytable_css_oxnomtfin8wzfjzf8utf { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_nwd0rsy5sr19dq6i9uzf, .table th.tinytable_css_nwd0rsy5sr19dq6i9uzf { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_mir44ardeg0lkp8xp5l6, .table th.tinytable_css_mir44ardeg0lkp8xp5l6 { text-align: left; }
+      .table td.tinytable_css_hzznl4tm4p5neci79r2i, .table th.tinytable_css_hzznl4tm4p5neci79r2i { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_huz8rlka6kdpvqbe2ye8, .table th.tinytable_css_huz8rlka6kdpvqbe2ye8 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_egbxgeqguqmpx2wajrwf, .table th.tinytable_css_egbxgeqguqmpx2wajrwf { text-align: center; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_5dqx9bqdygauwzrrtqvn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_smwnq88vxqkh27s54gn9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Table 1: Logistic Regression: Predictors of Opinion on Chinese Debt</caption>
               <tbody><tr>
@@ -434,23 +435,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(summary_stats) <span class="sc">|&gt;</span> </span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Descriptive Statistics of Key Variables"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="bdpkfopiyx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bdpkfopiyx table {
+<div id="qywkhamhtv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qywkhamhtv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bdpkfopiyx thead, #bdpkfopiyx tbody, #bdpkfopiyx tfoot, #bdpkfopiyx tr, #bdpkfopiyx td, #bdpkfopiyx th {
+#qywkhamhtv thead, #qywkhamhtv tbody, #qywkhamhtv tfoot, #qywkhamhtv tr, #qywkhamhtv td, #qywkhamhtv th {
   border-style: none;
 }
 
-#bdpkfopiyx p {
+#qywkhamhtv p {
   margin: 0;
   padding: 0;
 }
 
-#bdpkfopiyx .gt_table {
+#qywkhamhtv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -476,12 +477,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_caption {
+#qywkhamhtv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bdpkfopiyx .gt_title {
+#qywkhamhtv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -493,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#bdpkfopiyx .gt_subtitle {
+#qywkhamhtv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -505,7 +506,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#bdpkfopiyx .gt_heading {
+#qywkhamhtv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -517,13 +518,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_bottom_border {
+#qywkhamhtv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_col_headings {
+#qywkhamhtv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -538,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_col_heading {
+#qywkhamhtv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -558,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#bdpkfopiyx .gt_column_spanner_outer {
+#qywkhamhtv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -570,15 +571,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#bdpkfopiyx .gt_column_spanner_outer:first-child {
+#qywkhamhtv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bdpkfopiyx .gt_column_spanner_outer:last-child {
+#qywkhamhtv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bdpkfopiyx .gt_column_spanner {
+#qywkhamhtv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -590,11 +591,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#bdpkfopiyx .gt_spanner_row {
+#qywkhamhtv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bdpkfopiyx .gt_group_heading {
+#qywkhamhtv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -620,7 +621,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#bdpkfopiyx .gt_empty_group_heading {
+#qywkhamhtv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -635,15 +636,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#bdpkfopiyx .gt_from_md > :first-child {
+#qywkhamhtv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bdpkfopiyx .gt_from_md > :last-child {
+#qywkhamhtv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bdpkfopiyx .gt_row {
+#qywkhamhtv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -662,7 +663,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#bdpkfopiyx .gt_stub {
+#qywkhamhtv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -675,7 +676,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bdpkfopiyx .gt_stub_row_group {
+#qywkhamhtv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -689,15 +690,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#bdpkfopiyx .gt_row_group_first td {
+#qywkhamhtv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bdpkfopiyx .gt_row_group_first th {
+#qywkhamhtv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bdpkfopiyx .gt_summary_row {
+#qywkhamhtv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -707,16 +708,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bdpkfopiyx .gt_first_summary_row {
+#qywkhamhtv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_first_summary_row.thick {
+#qywkhamhtv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bdpkfopiyx .gt_last_summary_row {
+#qywkhamhtv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -726,7 +727,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_grand_summary_row {
+#qywkhamhtv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -736,7 +737,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bdpkfopiyx .gt_first_grand_summary_row {
+#qywkhamhtv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -746,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_last_grand_summary_row_top {
+#qywkhamhtv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -756,11 +757,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_striped {
+#qywkhamhtv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bdpkfopiyx .gt_table_body {
+#qywkhamhtv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -769,7 +770,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_footnotes {
+#qywkhamhtv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -783,7 +784,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_footnote {
+#qywkhamhtv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -792,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bdpkfopiyx .gt_sourcenotes {
+#qywkhamhtv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -806,7 +807,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#bdpkfopiyx .gt_sourcenote {
+#qywkhamhtv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -814,72 +815,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#bdpkfopiyx .gt_left {
+#qywkhamhtv .gt_left {
   text-align: left;
 }
 
-#bdpkfopiyx .gt_center {
+#qywkhamhtv .gt_center {
   text-align: center;
 }
 
-#bdpkfopiyx .gt_right {
+#qywkhamhtv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bdpkfopiyx .gt_font_normal {
+#qywkhamhtv .gt_font_normal {
   font-weight: normal;
 }
 
-#bdpkfopiyx .gt_font_bold {
+#qywkhamhtv .gt_font_bold {
   font-weight: bold;
 }
 
-#bdpkfopiyx .gt_font_italic {
+#qywkhamhtv .gt_font_italic {
   font-style: italic;
 }
 
-#bdpkfopiyx .gt_super {
+#qywkhamhtv .gt_super {
   font-size: 65%;
 }
 
-#bdpkfopiyx .gt_footnote_marks {
+#qywkhamhtv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bdpkfopiyx .gt_asterisk {
+#qywkhamhtv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bdpkfopiyx .gt_indent_1 {
+#qywkhamhtv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bdpkfopiyx .gt_indent_2 {
+#qywkhamhtv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bdpkfopiyx .gt_indent_3 {
+#qywkhamhtv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bdpkfopiyx .gt_indent_4 {
+#qywkhamhtv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bdpkfopiyx .gt_indent_5 {
+#qywkhamhtv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bdpkfopiyx .katex-display {
+#qywkhamhtv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bdpkfopiyx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qywkhamhtv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -935,8 +936,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <script>
 
-      function styleCell_8mrf8bsouhx43od2uicl(i, j, css_id) {
-          var table = document.getElementById("tinytable_8mrf8bsouhx43od2uicl");
+      function styleCell_w16gmwunlhet9gnpip6m(i, j, css_id) {
+          var table = document.getElementById("tinytable_w16gmwunlhet9gnpip6m");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -946,7 +947,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_8mrf8bsouhx43od2uicl');
+        var table = document.getElementById('tinytable_w16gmwunlhet9gnpip6m');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -954,8 +955,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_8mrf8bsouhx43od2uicl(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_8mrf8bsouhx43od2uicl");
+      function spanCell_w16gmwunlhet9gnpip6m(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_w16gmwunlhet9gnpip6m");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -985,20 +986,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_w8m72zde2fyomqjsc3k3',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_vuuwrhcmd8k2xd1z5t2o',}, 
-          { positions: [ { i: 10, j: 0 },  ], css_id: 'tinytable_css_o4wrytbndsjb84kdvkok',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 14, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 15, j: 1 },  ], css_id: 'tinytable_css_jrhcpjljr7mdhvwmzl7n',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_i3qrm2bllb2pu51ok181',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 14, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 15, j: 0 },  ], css_id: 'tinytable_css_ecb024gkyl7987aseg3d',}, 
-          { positions: [ { i: 10, j: 1 },  ], css_id: 'tinytable_css_7q5ndim2f8bnol26wral',}, 
-          { positions: [ { i: 16, j: 1 },  ], css_id: 'tinytable_css_0eu6cqpp7jjxktkvrwpf',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_xnri2mfzggsbyu6n3zq0',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_ts32y4m0wfv2renniu2h',}, 
+          { positions: [ { i: 10, j: 1 },  ], css_id: 'tinytable_css_rxuxok68ov109fvxd8er',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 14, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 15, j: 1 },  ], css_id: 'tinytable_css_qh0b5yqxbwiaa2n23yg3',}, 
+          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_pn9nwib8k68q2cgief5i',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 14, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 15, j: 0 },  ], css_id: 'tinytable_css_b1vfx22jpzwzv65min4x',}, 
+          { positions: [ { i: 16, j: 1 },  ], css_id: 'tinytable_css_ad9lfszpawd1nbzq6xya',}, 
+          { positions: [ { i: 10, j: 0 },  ], css_id: 'tinytable_css_1xjhqjg03bt6qx3gaquz',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_8mrf8bsouhx43od2uicl(cell.i, cell.j, group.css_id);
+                  styleCell_w16gmwunlhet9gnpip6m(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1006,17 +1007,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_w8m72zde2fyomqjsc3k3, .table th.tinytable_css_w8m72zde2fyomqjsc3k3 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_vuuwrhcmd8k2xd1z5t2o, .table th.tinytable_css_vuuwrhcmd8k2xd1z5t2o { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_o4wrytbndsjb84kdvkok, .table th.tinytable_css_o4wrytbndsjb84kdvkok { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_jrhcpjljr7mdhvwmzl7n, .table th.tinytable_css_jrhcpjljr7mdhvwmzl7n { text-align: center; }
-      .table td.tinytable_css_i3qrm2bllb2pu51ok181, .table th.tinytable_css_i3qrm2bllb2pu51ok181 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_ecb024gkyl7987aseg3d, .table th.tinytable_css_ecb024gkyl7987aseg3d { text-align: left; }
-      .table td.tinytable_css_7q5ndim2f8bnol26wral, .table th.tinytable_css_7q5ndim2f8bnol26wral { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_0eu6cqpp7jjxktkvrwpf, .table th.tinytable_css_0eu6cqpp7jjxktkvrwpf { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_xnri2mfzggsbyu6n3zq0, .table th.tinytable_css_xnri2mfzggsbyu6n3zq0 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ts32y4m0wfv2renniu2h, .table th.tinytable_css_ts32y4m0wfv2renniu2h { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_rxuxok68ov109fvxd8er, .table th.tinytable_css_rxuxok68ov109fvxd8er { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_qh0b5yqxbwiaa2n23yg3, .table th.tinytable_css_qh0b5yqxbwiaa2n23yg3 { text-align: center; }
+      .table td.tinytable_css_pn9nwib8k68q2cgief5i, .table th.tinytable_css_pn9nwib8k68q2cgief5i { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_b1vfx22jpzwzv65min4x, .table th.tinytable_css_b1vfx22jpzwzv65min4x { text-align: left; }
+      .table td.tinytable_css_ad9lfszpawd1nbzq6xya, .table th.tinytable_css_ad9lfszpawd1nbzq6xya { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_1xjhqjg03bt6qx3gaquz, .table th.tinytable_css_1xjhqjg03bt6qx3gaquz { text-align: left; border-bottom: solid black 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_8mrf8bsouhx43od2uicl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_w16gmwunlhet9gnpip6m" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         </thead><caption>Perception of Chinese Loans by Education × Debt Level Groups</caption>
               <tbody><tr>

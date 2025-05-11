@@ -2,10 +2,351 @@
 title: "Final Project"
 ---
 
-This is a Quarto website.
+```{r}
+#| echo: false 
+#| warning: false 
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+library(haven)
+library(tidyverse)
+library(gt)
+library(dplyr)
+library(readxl)
+library(data.table)
+library(arrow) 
+library(ggplot2)
+library(knitr)
+library(scales)
+library(modelsummary)
+library(lme4)
+library(ggeffects)
+```
 
 ```{r}
-1 + 1
+#| echo: false 
+#| warning: false
+
+AidData <- read_excel("/Users/lihamearouna/Dropbox/PSCI3200/ADv3.xlsx", sheet = "GCDF_3.0")
+
+# Selecting only the necessary columns manually 
+AidData <- AidData[,c("Recipient", "Completion Year", "Title", "Description", "Status", "Recipient Region", 'Amount (Constant USD 2021)')]  
+
+# Converting to data.table for memory efficiency & reloading 
+AidData <- as.data.table(AidData)
+write_parquet(AidData, "AidData.parquet")
+AidData <- read_parquet("AidData.parquet")
+
+#Changing Recipient name 
+AidData <- AidData |> 
+  rename(COUNTRY = Recipient,
+         Amount = 'Amount (Constant USD 2021)', 
+         Region = 'Recipient Region' ) |> 
+  filter(Region == 'Africa')
+head(AidData)
+
+# Afrobarometer Merged 8 
+# Defining the URL and destination file name
+url <- "https://www.afrobarometer.org/wp-content/uploads/2023/03/afrobarometer_release-dataset_merge-34ctry_r8_en_2023-03-01.sav"
+destfile <- "afrobarometer_r8.sav"
+
+download.file(url, destfile = destfile, mode = "wb")
+data8 <- haven::read_sav(destfile)
+# Renaming numeric country column 
+colnames(data8)[colnames(data8) == "COUNTRY"] <-  "country_id"
+
 ```
+
+```{r}
+#| echo: false 
+#| warning: false
+
+#Adjusting data sets for merge by creating a separate data frame with country ID-country name 
+country_mapping <- data.frame(
+  country_id = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,26,27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40), 
+  COUNTRY = c("Angola", "Benin", "Botswana", "Burkina Faso", "Cabo Verde", "Cameroon", 
+                   "CongoBrazzaville", "Côte d'Ivoire", "Eswatini", "Ethiopia", "Gabon", "Gambia", 
+                   "Ghana", "Guinea", "Kenya", "Lesotho", "Liberia", "Madagascar", "Malawi", "Mali", 
+                   "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria",
+                   "São Tomé and Príncipe", "Senegal", "Seychelles", "Sierra Leone", "South Africa", 
+                   "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe")
+)
+#Merging using numercic country ID to get a dataset that is traceable by country name
+first_merge <- left_join(data8, country_mapping, by = "country_id")
+#Grouping to match by total aid per country for sake of memory and findings 
+AidData_summary <- AidData |> 
+  group_by(COUNTRY) |>
+  summarize(total_aid = sum(Amount, na.rm = TRUE)) 
+merged_data <- left_join(AidData_summary, first_merge, by = "COUNTRY")
+```
+Introduction: 
+	
+Over the past century, China has become an increasingly important player in the politics and economic development of African countries. The Sino-African relationship, which began in the 1950s through political diplomatic relations rooted in third world solidarity has expanded into a multifaceted economic partnership. This newfound association poses tremendous implications for the US in its role in global governance and affairs on the continent, prompting a great deal of discourse in international relations.  Two dominant schools of thought emerge as the framework through which this engagement is interpreted—those who view Chinese investment as a neo-colonial form of extractivism and those who see it as a mutually beneficial South-South partnership offering an alternative to Western conditional aid. As China and the US continue to compete for economic and geopolitical influence, African nations find themselves positioned in the center of the global tug of war, leveraging partnerships for developmental gain and wrestling with concerns of debt sustainability, democracy, and resource control. Prevailing narratives from the West would have it that Chinese investments are deleterious to democratic norms and governance structures in Africa, often portraying them as enabling authoritarian regimes, exacerbating corruption, and undermining transparency. The broader complexity of this debate is reflected in the differing stances of African politicians, with some embracing Chinese investment as a necessary catalyst for development, while others express concerns over debt dependency and governance implications. However, one crucial perspective that remains underexplored in the literature is that of African people themselves. This project investigates how African citizens perceive Chinese loans, asking: How do these perceptions vary based on the amount of Chinese investment their countries receive? It further examines whether these perceptions differ by educational attainment, positing that citizens with greater access to information may evaluate foreign influence more critically. By accounting for both national-level exposure and individual-level variation, the analysis seeks to illuminate how structural and informational factors interact to shape public sentiment in the context of global power competition.This paper aims to fill the void of African perspectives in the ongoing debate about the consequence of increased Chinese partnership on the continent.  Moving beyond state-centric and Western-dominated narratives, this analysis seeks to highlight how Africans themselves interpret, navigate, and respond to Chinese engagement—whether as an opportunity for economic transformation, a source of new dependencies, or something more nuanced. 
+Much of the scrutiny surrounding China’s role in Africa stems from its ideological divergence from the United States. Early partnerships, formed during the Cold War, were grounded in shared anti-imperialist sentiment and a rejection of Western dominance, establishing relationships that prioritized sovereignty over liberal democratic values. This ideological contrast remains relevant today, as China’s policy of non-interference and emphasis on state-led development continues to clash with the U.S.’s democracy-promotion agenda (@saiia2025). These divergent worldviews are reflected in their approaches to economic engagement: China primarily offers loans and sometimes infrastructure-for-resource deals, while the U.S. tends to favor grant-based aid linked to governance and democratic reforms. While dominant Western narratives often portray Chinese loans as uniformly burdensome or exploitative, scholars argue that the reality is more nuanced. Although risks are present, Chinese lending practices vary significantly depending on the lender, the borrowing country, and the nature of the project (@alden2021). While Chinese creditors are a notable part of Africa’s debt landscape, their overall contribution is relatively modest and not the primary cause of debt distress on the continent (@alden2021).  Beyond economics, China’s expanding presence is increasingly viewed as a challenge to U.S. soft power, with scholars and policymakers warning of a potential resurgence in authoritarian influence as China deepens its foothold across the continent. Geopolitical competition has real consequences, beyond economic benefits it redefines how individuals  perceive development projects and foreign direct investment. This competition shapes not only policy decisions at the national level but also public opinion, influencing how communities evaluate the legitimacy, intentions, and long-term value of foreign involvement in their local development (@springman2025). The dominant narrative surrounding partnerships in Africa often frames them as a zero-sum contest between global powers—primarily the United States and China. Such portrayals are overly reductive and leave little room for nuance in understanding African agency. Taking African perspectives seriously requires moving beyond this binary thinking. The continent’s engagement with, and attraction to, China’s development model should not be interpreted as a rejection of democratic or competitive norms. Rather, these choices are often shaped less by ideology and more by pragmatic assessments of what is perceived to be most beneficial (@Benabdallah2023). Any research occurring about the African continent cannot ignore its historical position at the center of global struggles from colonialism to the Cold War and now the current era of multipolarity. This long standing engagement with competing global powers has not only shaped the political and economic structures of African states, but also informs how contemporary partnerships are evaluated and pursued. Understanding these dynamics requires a shift away from viewing African states as passive recipients of influence, and instead recognizing their strategic agency in navigating an evolving global order.
+Building on work done in analyzing the role of China's economic influence in the competitive global landscape– and seeking to complicate our understanding of Chinese African relations beyond western dominated narratives–  this study centers how Africans perceive China’s growing presence on the continent. It challenges the assumption that growing geopolitical competition fundamentally reshapes African nations' preferences for aid from either China or the West. Instead, it posits that–at least in the eyes of citizens– geopolitical competition has neutral effects on the ways in which they view aid—especially given that these external pressures have long since informed the African nations engagement with global powers. 
+
+Theory and Hypothesis: 
+
+This paper examines how varying levels of Chinese foreign investment, within the context of an increasingly competitive global landscape, influence African citizens’ perceptions of foreign aid and development. Grounded in scholarship that complicates binary portrayals of Chinese-African engagement (@Benabdallah2023;@taylor2006), this study considers that geopolitical competition is not necessarily internalized by everyday citizens. This is not because it lacks significance, but because external power struggles have historically shaped Africa’s interactions with the world. In this context, the longstanding presence of competing global powers has normalized foreign involvement, prompting citizens to evaluate aid less through ideological lenses and more through its tangible outcomes. As a result, this paper argues that perceptions of Chinese aid are shaped more by visible, material benefits than by broader geopolitical narratives. This responsiveness may be especially pronounced among individuals with lower levels of formal education, who are often more directly impacted by and attuned to localized development outcomes than abstract foreign policy dynamics. 
+Hypothesis: In countries receiving higher levels of Chinese development finance, citizens will exhibit more favorable perceptions of Chinese foreign investment. This relationship will be stronger among individuals with lower levels of formal education.
+This hypothesis rests on the assumption that development in the country is what enhances the legitimacy of foreign actors, independent of concerns about national debt or sovereignty. This effect may be magnified for populations that are less exposed to critical ideological narratives. It’s clear that Chinese lending has been crucial to financing large scale projects. Therefore, it is plausible that in countries receiving higher levels of Chinese finance, citizens perceive this engagement more positively not necessarily because they prefer China ideologically, but because they see real material outcomes in their daily lives.
+Research Design 
+This study uses two primary datasets: AidData’s Global Chinese Development Finance Dataset v3.0 and the Afrobarometer Merged Round 8 survey (2022), covering 34 African countries. AidData tracks 20,985 Chinese-financed development projects worth $1.34 trillion across 165 low- and middle-income countries from 2000 to 2021, with implementation data through 2023. It provides country-level indicators of Chinese investment. Afrobarometer offers nationally representative surveys of adults aged 18 and older, capturing political, economic, and social attitudes. The unit of analysis is the individual respondent (n = 15,747), with country-level investment data merged by country of residence.
+While the merged dataset enables a multi-level analysis of how national investment exposure interacts with individual-level characteristics, there are important limitations. Notably, neither dataset directly captures how African citizens feel about receiving Chinese investment. Instead, this study relies on a proxy variable that reflects whether respondents believe their government has borrowed too much from China—a question that signals concern but does not fully capture perceptions of the investment’s quality, intent, or impact. As such, any conclusions drawn must be interpreted with caution, given the indirect nature of the measure.
+	The analysis is carried out using a logistic regression to model the probability of the binary outcome (yes or no). The independent variable x represents the amount of Chinese investment per country and is drawn from AidData’s Global Chinese Development Finance dataset. The dependent variable Y represents the public perception of Chinese foreign investment as either positive or negative. Question 65C from Afrobarometer round 8– "Do you think our government has borrowed too much money from China, or haven’t you heard enough to say?"— is used as a proxy for public awareness and attitudes toward Chinese development finance.
+ This variable captures whether respondents believe their government has borrowed excessively from China, with value labels indicating 'Yes' (1), 'No' (0), 'Not applicable' (7), 'Refused' (8), 'Don’t know' (9), and 'Missing' (-1). For the purposes of this analysis, only valid responses coded as 'Yes' or 'No' are retained to construct a binary outcome. By pairing Afrobarometer perception data with verified investment records, this study provides the opportunity to assess whether public concerns about Chinese lending correlate with financial engagement on the ground. 
+ 
+Logistic Regression Model: Logit(P(Yi​=1))=β0​+β1​Xi​+β2​Z1​+β3​Z2​+⋯+βk​Zk​+ϵi​
+
+The model includes several covariates to account for factors that may shape perceptions of Chinese development finance. Education captures access to political knowledge; employment status reflects socio economic positioning and potential exposure to aid benefits; trust in government gauges institutional confidence, which may influence attitudes toward foreign borrowing. These variables are measured using Afrobarometer survey items detailed in the appendix.
+	A key limitation of this study is the potential for omitted variable bias. This arises when relevant factors that influence both the independent and dependent variables are not included in the model. Unobserved factors on the individual level, such as political ideology or exposure to foreign media, are not directly captured in the available data and mahy still influence response. While the empirical strategy accounts for this on a country to country basis, it does noy limit the risk of omitted variable bias entirely. There is also a temporal limitation, as public opinion is captured at only one point in time. This cross-sectional snapshot prevents the analysis from observing how perceptions of Chinese investment evolve in response to shifting political dynamics, project outcomes, or broader changes in the geopolitical landscape. Without longitudinal data, it is difficult to assess whether observed attitudes are stable over time or reflect short-term sentiments influenced by recent events.
+To strengthen causal inference, this study includes an empirical extension that restricts the sample to individuals with low formal education. By doing so, the analysis isolates variation in perception among respondents who are less likely to be exposed to elite or ideological criticism of Chinese investment. If the relationship between country-level aid and perception holds in this subgroup, it reduces concern that the main results are driven by educated elites who may be more attuned to geopolitical discourse or external media. This extension helps rule out information exposure as a confounding pathway, strengthening the claim that observed effects reflect material development impacts rather than ideological filtering.
+  To strengthen causal inference, this study includes an empirical extension that restricts the sample to individuals with low formal education. By doing so, the analysis isolates variation in perception among respondents who are less likely to be exposed to elite or ideological criticism of Chinese investment. If the relationship between country-level aid and perception holds in this subgroup, it reduces concern that the main results are driven by educated elites who may be more attuned to geopolitical discourse or external media. This extension helps rule out information exposure as a confounding pathway, strengthening the claim that observed effects reflect material development impacts rather than ideological filtering.
+```{r}
+#| echo: false 
+#| warning: false
+
+# Filtering data to only include Yes/No responses from Q65C
+filtered_data <- merged_data |>
+  filter(Q65C %in% c(1, 0)) 
+
+# Summarizing data by public perception
+summary_data <- filtered_data |>
+  #calculating mean & variability of aid received by groups defined by perception of Chinese debt 
+  group_by(Q65C) |> 
+  summarise(
+    mean_investment = mean(total_aid, na.rm = TRUE),
+    sd = sd(total_aid, na.rm = TRUE),
+    n = n(),
+    se = sd / sqrt(n)
+  )
+
+
+summary_data$Q65C <- factor(summary_data$Q65C, 
+                         levels = c(0, 1), 
+                         labels = c("No", "Yes"))
+
+# Bar chart with error bars
+ggplot(summary_data, aes(x = Q65C, y = mean_investment)) +
+  geom_col(fill = "orange") +
+  geom_errorbar(aes(ymin = mean_investment - se, ymax = mean_investment + se), width = 0.2) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title = "Figure 1: Average Chinese Investment Grouped by Public Perception of Chinese debt",
+    caption = "Based on Afrobarometer Q65C: 'Do you think our government has borrowed too much money from China?'", 
+    x = "Public Perception (Q65C)",
+    y = "Average Total Investment (USD)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| echo: false 
+#| warning: false 
+
+#grouping education, employment, and trust in president data into few key groups 
+analysis_data <- filtered_data |> 
+  mutate(
+    education_group = case_when(
+      Q97 %in% 0:2 ~ "Low",
+      Q97 %in% 3:5 ~ "Medium",
+      Q97 %in% 6:9 ~ "High",
+      TRUE ~ NA_character_
+    ),
+    employment_status = case_when(
+      Q95A == 0 ~ "Not looking",
+      Q95A == 1 ~ "Looking",
+      Q95A == 2 ~ "Part-time",
+      Q95A == 3 ~ "Full-time",
+      TRUE ~ NA_character_
+    ),
+    trust_president = case_when(
+      Q41A %in% c(0,1) ~ "Low",
+      Q41A == 2 ~ "Medium",
+      Q41A == 3 ~ "High",
+      TRUE ~ NA_character_
+    ),
+    # Converting to factors
+    education_group = factor(education_group, levels = c("Low", "Medium", "High")),
+    employment_status = factor(employment_status),
+    trust_president = factor(trust_president, levels = c("Low", "Medium", "High")),
+    REGION = factor(REGION)
+  )
+
+# Ensuring Q65C is treated as a factor (Yes = 1, No = 0)
+analysis_data$Q65C <- factor(analysis_data$Q65C, levels = c(0, 1), labels = c("No", "Yes"))
+
+#Model 1 (no Fixed Effects)
+model1 <- glm(
+  Q65C ~ education_group + employment_status + trust_president,
+  data = analysis_data,
+  family = binomial(link = "logit")
+)
+
+#Model 2 (region as fixed effects)
+model2 <- glm(
+  Q65C ~ education_group + employment_status + trust_president + REGION,
+  data = analysis_data,
+  family = binomial(link = "logit")
+)
+#Model 1 & 2 displayed side by side 
+modelsummary(
+  list(
+    "Without Region Fixed Effects" = model1,
+    "With Region Fixed Effects" = model2
+  ),
+  stars = TRUE,
+  output = "markdown",
+  title = "Table 1: Logistic Regression: Predictors of Opinion on Chinese Debt",
+  coef_map = c(
+    "education_groupMedium" = "Education: Medium",
+    "education_groupHigh" = "Education: High",
+    "employment_statusLooking" = "Employment: Looking",
+    "employment_statusPart-time" = "Employment: Part-time",
+    "employment_statusFull-time" = "Employment: Full-time",
+    "trust_presidentMedium" = "Trust in President: Medium",
+    "trust_presidentHigh" = "Trust in President: High"
+  )
+)
+```
+
+
+```{r}
+
+# Create a summary data frame
+summary_stats <- tibble::tibble(
+  Variable = c("Total Aid", "Education", "Trust in President", "Employment Status"),
+  Mean = c(mean(analysis_data$total_aid, na.rm = TRUE),
+           mean(as.numeric(analysis_data$Q97), na.rm = TRUE),
+           mean(as.numeric(analysis_data$Q41A), na.rm = TRUE),
+           mean(as.numeric(analysis_data$Q95A), na.rm = TRUE)),
+  Range = c(
+    paste0("$", scales::comma(min(analysis_data$total_aid, na.rm = TRUE)), " - $", scales::comma(max(analysis_data$total_aid, na.rm = TRUE))),
+    paste0(range(analysis_data$Q97, na.rm = TRUE), collapse = " - "),
+    paste0(range(analysis_data$Q41A, na.rm = TRUE), collapse = " - "),
+    paste0(range(analysis_data$Q95A, na.rm = TRUE), collapse = " - ")
+  ),
+  `Standard Deviation` = c(sd(analysis_data$total_aid, na.rm = TRUE),
+                           sd(as.numeric(analysis_data$Q97), na.rm = TRUE),
+                           sd(as.numeric(analysis_data$Q41A), na.rm = TRUE),
+                           sd(as.numeric(analysis_data$Q95A), na.rm = TRUE))
+)
+
+gt(summary_stats) |> 
+  tab_header(title = "Descriptive Statistics of Key Variables")
+
+```
+
+Findings
+
+Figure 1 displays a bar chart visualizing the relationship between the average Chinese investment and public perception of Chinese debt. The plot shows that, on average, those who perceive excessive borrowing report slightly lower investment from China compared to those who do not view the borrowing as excessive. The "Yes" group has an average investment of around 15 billion USD, while the "No" group has an average investment of approximately 17 billion USD. Although there is a discernible difference, the error bars suggest that there is considerable variability within each group, implying that while a trend exists, it may not be overwhelmingly large. The relationship between public perception of Chinese debt and investment appears to be modest, highlighting the need for further exploration of additional factors that could influence public views on this matter.
+The regression analysis (Table 1)  examines predictors of public opinion on Chinese debt, focusing on education, employment status, and trust in the president. Education level significantly affects perceptions, with those having medium or high education more likely to perceive excessive borrowing. Specifically, individuals with medium education are 0.281 more likely, while those with higher education are 0.259 more likely to hold this view. These results indicate that education is an important factor in shaping opinions about government borrowing from China.
+Employment status also plays a role, with job-seeking individuals (-0.348) less likely to view borrowing as excessive, suggesting that economic circumstances may influence perceptions. Those in part-time employment show a weaker negative effect (-0.155), reflecting the idea that individuals focused on immediate economic concerns may not prioritize foreign debt issues. Trust in the president is another key factor, with higher trust leading to less critical views on Chinese debt. High trust in the president correlates with a -0.478 reduction in the likelihood of perceiving excessive borrowing.
+The regression results are statistically significant, with education and trust in the president showing strong effects at the 1% level, while employment status is significant at the 5% level. The findings underscore the importance of education and trust in shaping public perceptions of Chinese debt, with substantial effects from these variables. Despite the strong effects, the large sample size (15,497) suggests sufficient statistical power, though unobserved factors could still influence perceptions. 
+
+
+```{r}
+#| echo: false 
+#| warning: false 
+
+#summarize total aid by country and placing in high/low buckets 
+country_debt <- analysis_data |> 
+  group_by(COUNTRY) |> 
+  summarise(
+    mean_investment = mean(total_aid, na.rm = TRUE)
+  ) |> 
+  mutate(
+    debt_level = ifelse(mean_investment > median(mean_investment, na.rm = TRUE), "High", "Low"),
+    debt_level = factor(debt_level, levels = c("Low", "High"))
+  )
+
+#merging back into data set 
+analysis_data <- analysis_data |> 
+  left_join(country_debt |> select(COUNTRY, debt_level), by = "COUNTRY")
+
+# Creating an interaction group variable 
+
+analysis_data_filtered <- analysis_data |>
+  filter(education_group %in% c("Low", "High"))
+
+# Create combined variable: 4 interaction groups
+analysis_data_filtered <- analysis_data_filtered |> 
+  mutate(edu_debt_group = case_when(
+    education_group == "Low" & debt_level == "Low" ~ "LowEd_LowDebt",
+    education_group == "Low" & debt_level == "High" ~ "LowEd_HighDebt",
+    education_group == "High" & debt_level == "Low" ~ "HighEd_LowDebt",
+    education_group == "High" & debt_level == "High" ~ "HighEd_HighDebt",
+    TRUE ~ NA_character_
+  )) |> 
+  mutate(edu_debt_group = factor(edu_debt_group,
+                                 levels = c("LowEd_LowDebt", "LowEd_HighDebt",
+                                            "HighEd_LowDebt", "HighEd_HighDebt"))) #LowEd_Lowdebts is the reference group, all other coefficients compare against it. 
+
+#estimate the model using the enw variable as your key indpendent variable 
+model_grouped <- glm(
+  Q65C ~ edu_debt_group + employment_status,
+  data = analysis_data_filtered,
+  family = binomial(link = "logit")
+)
+
+# Model summary with labeled coefficients and title at the top
+modelsummary(
+  model_grouped,
+  stars = TRUE,
+  title = "Perception of Chinese Loans by Education × Debt Level Groups",  # Title at the top
+  coef_map = c(
+    "edu_debt_groupLowEd_HighDebt" = "LowEd × HighDebt",  # Label for LowEd × HighDebt
+    "edu_debt_groupHighEd_LowDebt" = "HighEd × LowDebt",  # Label for HighEd × LowDebt
+    "edu_debt_groupHighEd_HighDebt" = "HighEd × HighDebt",  # Label for HighEd × HighDebt
+    "employment_statusLooking" = "Employment: Looking",  # Label for Employment: Looking
+    "employment_statusPart-time" = "Employment: Part-time",  # Label for Employment: Part-time
+    "employment_statusFull-time" = "Employment: Full-time",  # Label for Employment: Full-time
+    "trust_presidentMedium" = "Trust in President: Medium",  # Label for Trust in President: Medium
+    "trust_presidentHigh" = "Trust in President: High"  # Label for Trust in President: High
+  ),
+  output = "markdown"
+
+)
+
+
+#Plot predicted probabilities 
+
+# Get predictions for each group
+preds <- ggpredict(model_grouped, terms = "edu_debt_group")
+
+# Plot
+plot(preds) +
+  labs(
+    title = "Predicted Probability of Viewing Chinese Loans as a Problem",
+    x = "Education × Debt Group",
+    y = "Predicted Probability"
+  )
+
+```
+Empirical Extension: 
+
+Figure 2 displays the predicted probabilities of viewing Chinese loans as a problem across four education × debt group interactions: LowEd_LowDebt, LowEd_HighDebt, HighEd_LowDebt, and HighEd_HighDebt. The results demonstrate that individuals in the HighEd_HighDebt group (those with high education and a high perception of debt) have the highest predicted probability of viewing Chinese loans as a problem, approaching 84%. This is followed by the HighEd_LowDebt group, with a predicted probability of around 80%. The LowEd_LowDebt group (those with low education and a low perception of debt) has the lowest predicted probability, just below 76%, while the LowEd_HighDebt group lies between 76% and 80%. These findings suggest that education, especially when combined with perceptions of national debt, significantly influences how individuals view Chinese loans.
+The error bars in the plot indicate that the differences between these groups are statistically significant. For example, the HighEd_HighDebt group is predicted to have a significantly higher probability of viewing Chinese loans as problematic compared to the LowEd_LowDebt group, reinforcing the hypothesis that education and debt perception interact to shape opinions on foreign loans. This result supports the notion that access to information, represented here by education, conditions how individuals respond to foreign debt, with better-informed groups (those with higher education) showing more concern about the implications of such loans.
+The regression model further supports these findings, with education and debt level interacting as key determinants of individuals' views on Chinese loans. Specifically, the predicted probabilities reveal an approximately 8% difference between the LowEd_LowDebt and HighEd_HighDebt groups, demonstrating that education significantly influences the likelihood of perceiving Chinese loans as problematic. The regression results (table 2) also show that employment status plays a role, with individuals "Looking" for work showing a statistically significant negative association with viewing Chinese loans as a problem (-0.314, ***p < 0.001). It’s likely that individuals who are unemployed or seeking work may be less concerned about foreign debt, possibly because their immediate economic concerns take precedence. The part-time and full-time employment coefficients were not statistically significant, indicating that this measurement of employment may not have a large impact on perceptions of Chinese loans. 
+Overall, the plot and regression analysis highlights that education plays a significant role  in shaping public opinion on foreign debt. The results show that higher education, particularly in combination with the perception of high national debt, leads to a higher probability of viewing Chinese loans as a problem. These findings confirm the hypothesis that access to information—through education—significantly conditions individuals' responses to Chinese loans. 
+
+Conclusion: 
+
+For Africans surveyed in the Afrobarometer 2022 Round 8 Survey we find some evidence that education, particularly in combination with perceptions of national debt, plays a significant role in shaping individuals’ views on Chinese loans. The analysis shows that individuals with higher education and a high perception of debt are more likely to view Chinese loans as problematic. This relationship is evident both in the regression model and the predicted probabilities, with a clear pattern emerging. Employment status also plays a role, with individuals seeking work being less likely to view these loans negatively, possibly due to more immediate economic concerns.
+The study highlights the potential for African countries to strategically leverage education, transparency, and information access to navigate complex international relationships. By prioritizing these factors, African governments can better manage foreign partnerships and secure more balanced and equitable agreements that safeguard the welfare of future generations. This analysis focuses on education and debt perception, but other factors—such as political ideology or media exposure—heavily influence opinions. Future research would benefit from incorporating these variables and expanding the scope to include longitudinal data, providing stronger evidence on how education and information affect public opinion over time.
+While the insight that education and information access shape public opinion is not groundbreaking, the unique contribution of this study lies in its specific focus on how education and debt perception, in particular, interact to influence views on Chinese loans in Africa. Instead of merely recognizing that more information leads to better-informed opinions, this study emphasizes how individuals’ educational background and perceptions of national debt work together to shape their opinions on Chinese loans. This nuance gives a more comprehensive understanding of how African citizens evaluate Chinese loans in a complex geopolitical context. 
+
+#Appendix 
+
+This appendeix contains the questions used for covariates in the study: Education level, Employment, Region, Trust in President. 
+
+
+Question Number: Q97 Question: What is your highest level of education? Variable Label: Q97. Education of respondent Values: 0-9, 98, 99, -1 Value Labels: 0=No formal schooling, 1=Informal schooling only (including Koranic schooling), 2=Some primary schooling, 3=Primary school completed, 4=Intermediate school or some secondary school/high school, 5=Secondary school/high school completed, 6=Post-secondary qualifications, other than university, 7=Some university, 8=University completed, 9=Post-graduate, 98=Refused, 99=Don’t know, -1=Missing Source: SAB
+
+Question Number: Q95A Question: Do you have a job that pays a cash income? [If yes, ask] Is it full-time or part-time? [If no, ask:] Are you presently looking for a job? Variable Label: Q95a. Employment status Values: 0-3, 8, 9, -1 Value Labels: 0=No, not looking, 1=No, looking, 2=Yes, part time, 3=Yes, full time, 8=Refused, 9=Don’t know, -1=Missing Source: Afrobarometer Round 5
+
+Question Number: Q95C Question: What is your main occupation? [If unemployed, retired, or disabled, ask:] What was your last main occupation? Variable Label: Q95c. Occupation of respondent Values: 0-12, 220, 700, 1500, 15800, 1700, 95, 98, 99, -1 Value Labels: 0=Never had a job, 1=Student, 2=Housewife/homemaker, 3=Agriculture/farming/fishing/ forestry, 4=Trader/hawker/vendor, 5=Retail/shop, 6=Unskilled manual worker, 7=Artisan or skilled manual worker, 8=Clerical or secretarial, 9=Supervisor/foreman/senior manager, 10=Security services, 11=Mid-level professional, 12=Upper-level professional, 220=Retired, 700=Self-employed/Business Owner, 1500=Retired, 1580=Retired, 1700=RETRAITÉ, 95=Other, 98=Refused, 99=Don’t know, -1=Missing Source: SAB
+
+Question Number: REGION Question: Region/Province Variable Label: Province or region Values: 100-111, 140-164, 180-192, 220-224, 260-275, 300-346, 350-359, 380-394, 460-462, 501-509, 540-550, 580-593, 620-673, 700-708, 740-770, 780-792, 820-829, 860-869, 900-909, 930-933, 1100-1107, 1140-1145, 1221- 1232, 1260-1292, 1300-1307, 1340-1350, 1500-1511, 1540-1545, 1580-1586, 1620-1623, 1700-1708, 1740-1747, 1780-1797
+
+Question Number: Q41A Question: How much do you trust each of the following, or haven’t you heard enough about them to say: The President? Variable Label: Q41a. Trust president Values: 0-3, 8, 9, -1 Value Labels: 0=Not at all, 1=Just a little, 2=Somewhat, 3=A lot, 8=Refused, 9=Don’t know/Haven’t heard, - 1=Missing Source: Zambia96
+
+"Does a respondent's opinion on Chinese debt predict how much aid their area received, controlling for other factors like education, employment, and trust in the president?"
